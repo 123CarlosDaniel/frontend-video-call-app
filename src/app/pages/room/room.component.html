@@ -1,0 +1,23 @@
+<div id="videos" class="grid h-screen grid-cols-1 overflow-hidden">
+  <video
+    #video1
+    class="video-player"
+    id="user-1"
+    autoplay
+    playsinline
+  ></video>
+  <video
+    #video2
+    class="hidden video-player"
+    id="user-2"
+    autoplay
+    playsinline
+  ></video>
+</div>
+
+<room-buttons
+  (onToggleCamera)="toggleCamera()"
+  (onToggleMic)="toggleMic()"
+></room-buttons>
+
+<audio src="" #audio controls></audio>

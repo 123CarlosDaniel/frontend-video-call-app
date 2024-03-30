@@ -1,0 +1,29 @@
+<div id="controls" class="fixed flex gap-4 -translate-x-1/2 bottom-5 left-1/2">
+  <div class="control-container" id="camera-btn">
+    <button
+      mat-fab
+      [color]="cameraActive ? 'default' : 'warn'"
+      (click)="toggleCamera()"
+    >
+      <mat-icon>{{ cameraActive ? 'videocam' : 'videocam_off' }}</mat-icon>
+    </button>
+  </div>
+
+  <div class="control-container" id="mic-btn">
+    <button
+      mat-fab
+      [color]="micActive ? 'default' : 'warn'"
+      (click)="toggleMic()"
+    >
+      <mat-icon>{{ micActive ? 'mic' : 'mic_off' }}</mat-icon>
+    </button>
+  </div>
+
+  <a>
+    <div class="control-container" id="leave-btn">
+      <button mat-fab color="warn">
+        <mat-icon>call_end</mat-icon>
+      </button>
+    </div>
+  </a>
+</div>

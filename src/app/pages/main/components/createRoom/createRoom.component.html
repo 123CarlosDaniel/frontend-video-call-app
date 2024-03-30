@@ -1,0 +1,19 @@
+<div class="flex flex-col gap-y-2">
+  <span class="text-base font-medium">Crear sala</span>
+  <form (ngSubmit)="onSubmit()" [formGroup]="createRoomForm">
+    <mat-form-field color="primary" appearance="fill" class="w-full">
+      <input matInput placeholder="name" formControlName="name">
+      @if (showError) {
+        <mat-error>Name es requerido</mat-error>
+       }
+    </mat-form-field>
+    <mat-form-field color="primary" appearance="fill" class="w-full">
+      <input matInput placeholder="description" formControlName="description">
+    </mat-form-field>
+    <div class="flex justify-center">
+      <button mat-mini-fab type="submit" color="primary" matTooltip="Agregar sala">
+        <mat-icon>add</mat-icon>
+      </button>
+    </div>
+  </form>
+</div>

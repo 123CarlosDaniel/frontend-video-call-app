@@ -1,0 +1,35 @@
+<h2 class="">Salas disponibles</h2>
+<div class="grid w-full grid-cols-2 gap-4 xl:grid-cols-3">
+  @for (contact of contacts; track contact.id) {
+  <div class="flex flex-col gap-3">
+    <span class="text-lg font-medium">{{ contact.username }}</span>
+    @if (contact.rooms && contact.rooms.length) {
+      <div class="flex flex-col gap-3">
+        @for (room of contact.rooms; track room.id) {
+          <div class="flex flex-col gap-y-2">
+            <div class="flex items-center justify-between max-w-60">
+              <div class="flex flex-col">
+                <span class="font-medium">{{ room.name }}</span>
+                <span class="truncate max-w-40 text-neutral-600">Id : {{ room.id }}</span>
+              </div>
+              <button
+                mat-icon-button
+                color="accent"
+                matTooltip="Eliminar sala"
+                (click)="deleteRoom(room.id)"
+              >
+                <mat-icon>delete</mat-icon>
+              </button>
+            </div>
+            <span>{{ room.description }}</span>
+            <a mat-button href="room/{{room.id}}" color="primary" class="min-w-max">Ir a la sala</a>
+          </div>
+        }
+      </div>
+    }
+    @else {
+      <span>No hay salas</span>
+    }
+  </div>
+  }
+</div>

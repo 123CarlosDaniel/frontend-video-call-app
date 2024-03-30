@@ -1,0 +1,14 @@
+<div class="flex flex-col gap-y-2">
+  <span class="text-base font-medium">Nuevo contacto</span>
+  <form (ngSubmit)="onSubmit()" [formGroup]="addContactForm">
+    <mat-form-field color="primary" appearance="fill" class="max-w-full">
+      <input matInput placeholder="username" formControlName="username">
+      @if (showError) {
+         <mat-error>Username es requerido</mat-error>
+        }
+      <button mat-icon-button matSuffix type="submit" color="primary" matTooltip="Agregar contacto">
+        <mat-icon>add</mat-icon>
+      </button>
+    </mat-form-field>
+  </form>
+</div>

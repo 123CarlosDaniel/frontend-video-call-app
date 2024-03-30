@@ -1,0 +1,56 @@
+<div class="flex items-center justify-center w-screen min-h-full">
+  <div class="mt-8 w-96">
+    <mat-card appearance="outlined" class="p-5">
+      <h2 class="mb-4 text-lg text-center">
+        Crear cuenta
+      </h2>
+      <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+        <mat-card-content class="space-y-4">
+          <mat-form-field class="w-full" color="accent">
+            <mat-label>Username</mat-label>
+            <input
+              matInput
+              type="text"
+              placeholder="admin123"
+              formControlName="username"
+              [errorStateMatcher]="matcher"
+            />
+            @if (registerForm.get("username")?.hasError("required")) {
+            <mat-error>Username is required</mat-error>
+            }
+          </mat-form-field>
+          <mat-form-field class="w-full" color="accent">
+            <mat-label>Password</mat-label>
+            <input
+              [type]="hide ? 'password' : 'text'"
+              matInput
+              formControlName="password"
+              [errorStateMatcher]="matcher"
+            />
+            <button mat-icon-button matSuffix (click)="hide = !hide" type="button">
+              <mat-icon>{{ hide ? 'visibility_off' : 'visibility' }}</mat-icon>
+            </button>
+            @if (registerForm.get("password")?.hasError("required")) {
+            <mat-error>Password is required</mat-error>
+            }
+          </mat-form-field>
+
+          <div class="flex flex-col items-center justify-center w-full gap-4">
+            <span class="flex self-start gap-x-4">¿ Ya tienes una cuenta ? <a routerLink="/auth/login" class="text-red-500">Inicia sesión aquí</a></span>
+            <button
+              mat-raised-button
+              color="accent"
+              type="submit"
+              [disabled]="!isValidForm || showSpinner"
+            >
+              Registrar
+            </button>
+            @if (showSpinner) {
+            <mat-spinner diameter="30"></mat-spinner>
+            }
+          </div>
+        </mat-card-content>
+      </form>
+    </mat-card>
+  </div>
+</div>

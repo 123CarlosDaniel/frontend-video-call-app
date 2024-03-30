@@ -1,0 +1,40 @@
+<section class="flex flex-col min-h-full">
+  <nav
+    class="sticky top-0 z-50 flex items-center justify-between w-full px-16 py-4 bg-white bg-opacity-20 backdrop-blur-md max-h-16"
+  >
+    <div class="text-lg font-semibold tracking-wider">Panel de usuario</div>
+    <div mat-tab-nav-bar color="accent" [tabPanel]="tabPanel">
+      @for(link of links; track link) {
+      <a
+        class="capitalize"
+        mat-tab-link
+        [routerLink]="link.route"
+        (click)="activeLink = link.title"
+        [active]="activeLink == link.title"
+        >{{ link.title }}</a
+      >
+      }
+    </div>
+    <button mat-flat-button extended color="warn" (click)="logout()" matTooltip="Cerrar sesión">
+      <mat-icon>forward</mat-icon>
+      Log out
+    </button>
+  </nav>
+  <div class="relative flex flex-row justify-between w-full">
+    <div class="flex-1 px-8 py-4">
+      <mat-tab-nav-panel #tabPanel>
+        <router-outlet></router-outlet>
+      </mat-tab-nav-panel>
+    </div>
+
+    <div
+      class="sticky right-0 flex flex-col py-4 pl-4 pr-8 overflow-y-auto top-16 min-w-64 max-w-72 gap-y-3"
+      style="height: calc(100vh - 4rem);"
+    >
+    <main-add-contact-form></main-add-contact-form>
+    <main-createRoom></main-createRoom>
+    <mat-divider></mat-divider>
+    <main-contacts></main-contacts>
+    </div>
+  </div>
+</section>
