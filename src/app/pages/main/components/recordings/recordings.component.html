@@ -3,18 +3,28 @@
 <div class="w-full">
   <div class="grid grid-cols-1 gap-3 lg:grid-cols-2 xl:grid-cols-3">
     @for (record of recordings; track $index) {
-      <div class="flex flex-col gap-y-2">
-        <div class="flex items-center justify-between">
-          <div class="flex flex-col gap-y-1">
-            <span class="font-semibold">{{record.title}}</span>
-            <span class="text-neutral-500">{{record.date | date: 'yyyy-MM-dd HH:mm'}}</span>
-          </div>
-          <button mat-icon-button color="accent" matTooltip="Eliminar grabación" class="mr-8">
-            <mat-icon>delete</mat-icon>
-          </button>
+    <div class="flex flex-col gap-y-2">
+      <div class="flex items-center justify-between">
+        <div class="flex flex-col gap-y-1">
+          <span class="font-semibold truncate max-w-48">{{
+            record.title
+          }}</span>
+          <span class="text-neutral-500">{{
+            record.date | date : 'yyyy-MM-dd HH:mm'
+          }}</span>
         </div>
-        <audio src="" controls></audio>
+        <button
+          mat-icon-button
+          color="accent"
+          matTooltip="Eliminar grabación"
+          class="mr-8"
+          (click)="deleteRecording(record.cacheUrl)"
+        >
+          <mat-icon>delete</mat-icon>
+        </button>
       </div>
+      <audio src="{{ record.url }}" controls></audio>
+    </div>
     }
   </div>
 </div>

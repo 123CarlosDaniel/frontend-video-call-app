@@ -15,12 +15,15 @@ import {MatButtonModule} from '@angular/material/button'
 export class ButtonsMenuComponent{
   cameraActive = true
   micActive = true
-
+  recordActive = false
   @Output()
   onToggleCamera = new EventEmitter<void>()
 
   @Output()
   onToggleMic = new EventEmitter<void>()
+
+  @Output()
+  onToggleRecord = new EventEmitter<boolean>()
 
   toggleCamera() {
     this.onToggleCamera.emit()
@@ -30,5 +33,10 @@ export class ButtonsMenuComponent{
   toggleMic() {
     this.onToggleMic.emit()
     this.micActive = !this.micActive
+  }
+
+  toggleRecord(){
+    this.recordActive = !this.recordActive
+    this.onToggleRecord.emit(this.recordActive)
   }
 }

@@ -1,11 +1,13 @@
 import { Component, ElementRef, ViewChild, inject } from '@angular/core'
 import { ActivatedRoute } from '@angular/router'
 import { RtmChannel, RtmClient, RtmMessage } from 'agora-rtm-sdk'
-import { ButtonsMenuComponent } from './optionMenu/buttonsMenuComponent'
+import { ButtonsMenuComponent } from './optionMenu/buttonsMenu.component'
 import { CommonModule } from '@angular/common'
-import { modifyStream, recordAudio } from '@shared/stream-utils/streamTools'
+import { modifyStream } from '@shared/stream-utils/streamTools'
 import { AgoraService } from '@services/agora.service'
 import { mediaConstraints, iceServers } from '@shared/stream-utils/streamConstants'
+import { v4  as uuid } from 'uuid'
+import { RecordStream } from '@shared/stream-utils/RecordStream'
 
 @Component({
   templateUrl: './room.component.html',
@@ -15,15 +17,16 @@ import { mediaConstraints, iceServers } from '@shared/stream-utils/streamConstan
   imports: [ButtonsMenuComponent, CommonModule],
 })
 export class RoomComponent {
-  private router = inject(ActivatedRoute)
+  private activatedRouter = inject(ActivatedRoute)
   private agoraService = inject(AgoraService)
+  private recordStreamService = inject(RecordStream)
   private roomId: string
-  private uid = String(Math.random() * 1000)
+  private uid = uuid()
 
   private client: RtmClient
   private channel: RtmChannel
 
-  private localStream: MediaStream | undefined
+  private localStream: MediaStream
   private remoteStream: MediaStream | undefined
   private peerConnection: RTCPeerConnection | undefined
 
@@ -33,9 +36,6 @@ export class RoomComponent {
   @ViewChild('video2')
   video2Ref!: ElementRef<HTMLVideoElement>
 
-  @ViewChild('audio')
-  audioRef!: ElementRef<HTMLAudioElement>
-
   public smallFrame = false
 
   ngOnInit() {
@@ -43,7 +43,7 @@ export class RoomComponent {
   }
 
   constructor() {
-    this.roomId = this.router.snapshot.params['id']
+    this.roomId = this.activatedRouter.snapshot.params['id']
 
     this.client = this.agoraService.getAgoraClient()
   }
@@ -56,16 +56,10 @@ export class RoomComponent {
     this.channel.on('MemberLeft', this.handleUserLeft)
     this.client.on('MessageFromPeer', this.handleMessageFromPeer)
 
-    window.addEventListener('beforeunload', async()=>{
-      await this.channel.leave()
-      await this.client.logout() 
-    })
-
     this.localStream = await navigator.mediaDevices.getUserMedia(mediaConstraints)
     this.video1Ref.nativeElement.srcObject = this.localStream
- 
+    
     modifyStream(this.localStream)
-    recordAudio(this.localStream, this.audioRef)
   }
 
   public createPeerConnection = async (memberId: string) => {
@@ -83,7 +77,7 @@ export class RoomComponent {
     }
     
     this.localStream.getTracks().forEach((track) => {
-      this.peerConnection?.addTrack(track, this.localStream!)
+      this.peerConnection?.addTrack(track, this.localStream)
     })
 
     this.peerConnection.ontrack = (event) => {
@@ -169,5 +163,23 @@ export class RoomComponent {
       (track) => track.kind === 'video'
     )!
     videoTrack.enabled = !videoTrack.enabled
+  }
+
+  public toggleRecord = (recording: boolean)=>{
+    if(recording){
+      this.recordStreamService.record(this.localStream, this.remoteStream)
+    }
+    else {
+      this.recordStreamService.stopRecording()
+    }
+  }
+
+  ngOnDestroy(){
+    this.peerConnection?.close()
+    this.localStream!.getTracks().forEach((track) => {
+      track.stop()
+    })
+    this.channel.leave()
+    this.client.logout() 
   }
 }

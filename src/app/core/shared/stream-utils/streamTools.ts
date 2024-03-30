@@ -1,4 +1,3 @@
-import { ElementRef } from "@angular/core"
 
 export function modifyStream(stream: MediaStream) {
   const audioTracks = stream.getAudioTracks()
@@ -17,22 +16,5 @@ export function modifyStream(stream: MediaStream) {
 
   stream.removeTrack(audioTracks[0])
   stream.addTrack(modifiedAudioTrack)
-}
-
-export function recordAudio(stream: MediaStream,audioRef: ElementRef<HTMLAudioElement>){
-  const mediaRecorder = new MediaRecorder(stream)
-  const audioChunks: BlobPart[] = []
-  mediaRecorder.ondataavailable = e => {
-    audioChunks.push(e.data)
-  }
-  
-  mediaRecorder.onstop = () => {
-    const audioBlob = new Blob(audioChunks, {type: 'audio/wav'})
-    audioRef.nativeElement.src = URL.createObjectURL(audioBlob)
-  }
-  mediaRecorder.start()
-  setTimeout(()=>{
-    mediaRecorder.stop()
-  }, 5000)
 }
 
