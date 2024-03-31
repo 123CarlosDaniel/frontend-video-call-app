@@ -1,15 +1,11 @@
 import { DatePipe } from '@angular/common'
-import { Component } from '@angular/core'
+import { Component, inject } from '@angular/core'
 import { MatButtonModule } from '@angular/material/button'
 import { MatIconModule } from '@angular/material/icon'
 import { MatTooltipModule } from '@angular/material/tooltip'
-
-interface Recording {
-  date: string
-  title: string
-  url: string
-  cacheUrl: URL
-}
+import { Recording } from '@models/recording.model'
+import { RecordingService } from '@services/recording.service'
+import { Subscription } from 'rxjs'
 
 @Component({
   selector: 'main-recordings',
@@ -18,37 +14,23 @@ interface Recording {
   imports: [MatButtonModule, MatIconModule, MatTooltipModule, DatePipe],
 })
 export class RecordingsComponent {
-  recordings: Recording[]
 
-  async ngOnInit() {
-    this.getRecordings()
+  private recordingService = inject(RecordingService)
+  public recordings: Recording[]
+  private recordingSubscription : Subscription
+
+  ngOnInit() {
+    this.recordingService.getRecordObs().subscribe(_recordings => {
+      this.recordings = _recordings
+    })
+    this.recordingService.getRecordings()
   }
 
-  private getRecordings = async() => {
-    const cache = await caches.open('audios')
-    const keys = await cache.keys()
-    
-    const records = await Promise.all(
-      keys.map(async (k) => {
-        const url = new URL(k.url)
-        const name = url.pathname.split('/').pop()!
-        const data = JSON.parse(localStorage.getItem(name)!)
-        const r = await cache.match(k)
-        const audio = await r?.blob()
-        return {
-          date: data.date,
-          title: data.title,
-          url: URL.createObjectURL(audio!),
-          cacheUrl: url
-        }
-      })
-    )
-    this.recordings = records
+  ngOnDestroy(){
+    this.recordingSubscription.unsubscribe()
   }
 
   deleteRecording = async(url: URL) =>{
-    const cache = await caches.open('audios')
-    await cache.delete(url)
-    this.getRecordings()
+    this.recordingService.deleteRecording(url)
   }
 }
