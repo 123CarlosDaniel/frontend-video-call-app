@@ -9,7 +9,7 @@ import { BehaviorSubject } from "rxjs";
 export class RecordingService{
   private recordsObs = new BehaviorSubject<Recording[]>([])
   private snackBar = inject(MatSnackBar)
-
+  
   public getRecordings = async() => {
     const cache = await caches.open('audios')
     const keys = await cache.keys()

@@ -17,22 +17,16 @@ export class RecordStream{
       const source2 = audioContext.createMediaStreamSource(stream2)
       source2.connect(audioDestination)
     }
-  
     this.mediaRecorder = new MediaRecorder(audioDestination.stream);
-  
     const audioChunks: BlobPart[] = []
     this.mediaRecorder.ondataavailable = e => {
       audioChunks.push(e.data)
     }
-    
     this.mediaRecorder.onstop = async () => {
       const audioBlob = new Blob(audioChunks, {type: 'audio/wav'})
-      
       const cache = await caches.open('audios')
-    
       const response = new Response(audioBlob)
       const idName = uuid()
-
       await cache.put(idName, response)
       const data = {
         date : new Date().getTime(),
@@ -42,6 +36,7 @@ export class RecordStream{
     }
     this.mediaRecorder.start()
   }
+
   public stopRecording(){
     this.mediaRecorder.stop()
   }
