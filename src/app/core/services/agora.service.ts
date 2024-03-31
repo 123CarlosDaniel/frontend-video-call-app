@@ -1,11 +1,12 @@
 import { Injectable } from "@angular/core";
+import { environment } from "@environments/environment";
 import AgoraRTM from "agora-rtm-sdk";
 
 @Injectable({
   providedIn: 'root'
 })
 export class AgoraService{
-  private readonly agoraKey = "b58c6a062a7f49db96b1260f4764d8ed"
+  private readonly agoraKey = environment.agoraKey
 
   private agoraClient = AgoraRTM.createInstance(this.agoraKey)
 

@@ -27,7 +27,8 @@
     "paths": {
       "@services/*": ["./src/app/core/services/*"],
       "@models/*": ["./src/app/core/models/*"],
-      "@shared/*": ["./src/app/core/shared/*"]
+      "@shared/*": ["./src/app/core/shared/*"],
+      "@environments/*": ["./src/environments/*"]
     },
     "types": ["node"]
   },
