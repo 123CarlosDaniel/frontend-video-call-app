@@ -1,5 +1,5 @@
 import { Component } from '@angular/core'
-import { TemporalRecordings } from './components/temporalRecordings.component'
+import { TemporalRecordings } from './components/temporal-recordings.component'
 
 @Component({
   selector: 'main-recordings',

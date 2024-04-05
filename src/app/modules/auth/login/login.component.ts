@@ -12,18 +12,16 @@ import { MatInputModule } from '@angular/material/input'
 import { MatButtonModule } from '@angular/material/button'
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner'
 import { MatIconModule } from '@angular/material/icon'
-import { Router, RouterModule } from '@angular/router'
 import { AuthService } from '@services/auth.service'
+import { Router, RouterModule } from '@angular/router'
 import { MatSnackBar } from '@angular/material/snack-bar'
 import { Subscription } from 'rxjs'
-import { FormStateMatcher } from '@shared/form-utils/errorMatcher'
-
-
+import { FormStateMatcher } from '@shared/form-utils/error-matcher'
 
 @Component({
-  templateUrl: './register.component.html',
+  selector: 'app-login',
   standalone: true,
-  selector: 'app-register',
+  templateUrl: './login.component.html',
   imports: [
     MatCardModule,
     MatFormFieldModule,
@@ -35,53 +33,47 @@ import { FormStateMatcher } from '@shared/form-utils/errorMatcher'
     RouterModule,
   ],
 })
-export class RegisterComponent {
+export class LoginComponent {
   isValidForm = true
   hide = true
   showSpinner = false
+
   private authService = inject(AuthService)
   private router = inject(Router)
   private snackBar = inject(MatSnackBar)
 
-  registerForm = new FormGroup({
+  loginForm = new FormGroup({
     username: new FormControl('admin123', [Validators.required]),
     password: new FormControl('admin123', [Validators.required]),
   })
 
   matcher = new FormStateMatcher()
 
-  registerFormSub: Subscription
+  loginFormSub: Subscription
+
   ngOnInit() {
-    this.registerFormSub = this.registerForm.statusChanges.subscribe(() => {
-      this.isValidForm = this.registerForm.valid
+    this.loginFormSub = this.loginForm.statusChanges.subscribe(() => {
+      this.isValidForm = this.loginForm.valid
     })
   }
 
   ngOnDestroy() {
-    this.registerFormSub.unsubscribe()
+    this.loginFormSub.unsubscribe()
   }
 
   onSubmit() {
     if (this.isValidForm) {
       this.showSpinner = true
-      const { username, password } = this.registerForm.getRawValue()
-      this.authService.register(username!, password!).subscribe({
+      const { username, password } = this.loginForm.getRawValue()
+      this.authService.login(username!, password!).subscribe({
         next: (res) => {
           this.router.navigate(['/'])
         },
         error: (err) => {
-          console.log({err})
           if (err.statusText == 'OK') {
-            if(err.status == 400) {
-              this.snackBar.open('Usuario ya registrado', 'Close', {
-                duration: 3000,
-              })
-            }
-            else {
-              this.snackBar.open('Credenciales invalidas', 'Close', {
-                duration: 3000,
-              })
-            }
+            this.snackBar.open('Credenciales invalidas', 'Close', {
+              duration: 3000,
+            })
           } else {
             this.snackBar.open('Error del servidor', 'Close', {
               duration: 3000,

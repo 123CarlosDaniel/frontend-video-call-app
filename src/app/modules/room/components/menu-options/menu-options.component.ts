@@ -5,8 +5,8 @@ import {MatButtonModule} from '@angular/material/button'
 
 @Component({
   standalone: true,
-  selector: 'room-buttons',
-  templateUrl: 'buttonsMenu.component.html',
+  selector: 'menu-options',
+  templateUrl: 'menu-options.component.html',
   imports: [
     MatIconModule,
     MatButtonModule

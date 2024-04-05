@@ -38,6 +38,7 @@ export class AuthService{
         this.snackBar.open("Cerraste sesión", "Close", {duration: 3000})
       }
     })
+    // implementar limpiado de datos 
     this.tokenService.clearTokens()
   }
 }

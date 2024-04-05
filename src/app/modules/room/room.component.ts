@@ -1,13 +1,13 @@
 import { Component, ElementRef, ViewChild, inject } from '@angular/core'
 import { ActivatedRoute } from '@angular/router'
 import { RtmChannel, RtmClient, RtmMessage } from 'agora-rtm-sdk'
-import { ButtonsMenuComponent } from './optionMenu/buttonsMenu.component'
 import { CommonModule } from '@angular/common'
-import { modifyStream } from '@shared/stream-utils/streamTools'
+import { modifyStream } from '@shared/stream-utils/stream-tools'
 import { AgoraService } from '@services/agora.service'
-import { mediaConstraints, iceServers } from '@shared/stream-utils/streamConstants'
+import { mediaConstraints, iceServers } from '@shared/stream-utils/stream-constants'
 import { v4  as uuid } from 'uuid'
-import { RecordStream } from '@shared/stream-utils/RecordStream'
+import { RecordStream } from '@services/record-stream.service'
+import { ButtonsMenuComponent } from './components/menu-options/menu-options.component'
 
 @Component({
   templateUrl: './room.component.html',

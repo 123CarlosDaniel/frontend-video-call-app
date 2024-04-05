@@ -9,8 +9,8 @@ import { Subscription } from "rxjs";
 
 @Component({
   standalone: true,
-  selector: 'recording-temporal',
-  templateUrl: './temporalRecordings.component.html',
+  selector: 'temporal-recording',
+  templateUrl: './temporal-recordings.component.html',
   imports: [MatButtonModule, MatIconModule, MatTooltipModule, DatePipe],
 })
 export class TemporalRecordings{

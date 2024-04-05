@@ -9,7 +9,7 @@ import { DataService } from "@services/data.service";
 import { Subscription } from "rxjs";
 
 @Component({
-  templateUrl: './createRoom.component.html',
+  templateUrl: './create-room.component.html',
   standalone: true,
   imports: [
     MatButtonModule,
