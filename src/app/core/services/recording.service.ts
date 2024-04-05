@@ -35,6 +35,8 @@ export class RecordingService{
     const res = window.confirm("Do you want to delete this recording?")
     if(!res) return
     const cache = await caches.open('audios')
+    const name = url.pathname.split('/').pop()!
+    localStorage.removeItem(name)
     await cache.delete(url)
     this.snackBar.open('Deleted successfully', 'Close', {
       duration: 3000,
