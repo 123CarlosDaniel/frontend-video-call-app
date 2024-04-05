@@ -20,6 +20,7 @@
     "@angular/platform-browser": "^17.0.0",
     "@angular/platform-browser-dynamic": "^17.0.0",
     "@angular/router": "^17.0.0",
+    "@aws-sdk/client-s3": "^3.549.0",
     "@types/uuid": "^9.0.8",
     "agora-rtm-sdk": "1.5.1",
     "rxjs": "~7.8.0",
