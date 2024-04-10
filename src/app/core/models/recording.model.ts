@@ -1,6 +1,7 @@
 export interface Recording {
   date: string
-  title: string
+  id: string
+  name: string
   url: string
   cacheUrl: URL
 }
