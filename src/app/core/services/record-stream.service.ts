@@ -17,7 +17,10 @@ export class RecordStream{
       const source2 = audioContext.createMediaStreamSource(stream2)
       source2.connect(audioDestination)
     }
-    this.mediaRecorder = new MediaRecorder(audioDestination.stream);
+    this.mediaRecorder = new MediaRecorder(audioDestination.stream, {
+      audioBitsPerSecond: 16000
+    })
+
     const audioChunks: BlobPart[] = []
     this.mediaRecorder.ondataavailable = e => {
       audioChunks.push(e.data)
@@ -26,13 +29,14 @@ export class RecordStream{
       const audioBlob = new Blob(audioChunks, {type: 'audio/wav'})
       const cache = await caches.open('audios')
       const response = new Response(audioBlob)
-      const idName = uuid()
-      await cache.put(idName, response)
+      const randomId = uuid()
+      await cache.put(randomId, response)
       const data = {
         date : new Date().getTime(),
-        title: idName
+        id: randomId,
+        name: ""
       }
-      localStorage.setItem(idName, JSON.stringify(data))
+      localStorage.setItem(randomId, JSON.stringify(data))
     }
     this.mediaRecorder.start()
   }
