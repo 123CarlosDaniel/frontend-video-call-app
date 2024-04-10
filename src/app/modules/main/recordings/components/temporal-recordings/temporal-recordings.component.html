@@ -1,0 +1,48 @@
+<div class="w-full">
+  <div class="grid grid-cols-1 gap-3 lg:grid-cols-2 xl:grid-cols-3">
+    @for (record of recordings; track $index) {
+    <div class="flex flex-col gap-y-2">
+      <div class="flex items-center justify-between">
+        <div class="flex flex-col gap-y-1">
+          <input class="font-semibold truncate max-w-36" type="text" #inputName value="{{
+            record.name || record.id
+          }}"/>
+          <span class="text-neutral-500">{{
+            record.date | date : 'yyyy-MM-dd HH:mm'
+          }}</span>
+        </div>
+        <div class="mr-8">
+          <button
+          mat-icon-button
+          color="accent"
+          matTooltip="Editar nombre"
+          (click)="editName(record.cacheUrl)"
+          type="button"
+        >
+          <mat-icon>edit</mat-icon>
+        </button>     
+          <button
+            mat-icon-button
+            color="primary"
+            matTooltip="Guardar"
+            (click)="saveRecording(record.cacheUrl)"
+            type="button"
+          >
+            <mat-icon>save</mat-icon>
+          </button>          
+          <button
+            mat-icon-button
+            color="warn"
+            matTooltip="Eliminar"
+            (click)="deleteRecording(record.cacheUrl)"
+            type="button"
+          >
+            <mat-icon>delete</mat-icon>
+          </button>
+        </div>
+      </div>
+      <audio src="{{ record.url }}" controls></audio>
+    </div>
+    }
+  </div>
+</div>

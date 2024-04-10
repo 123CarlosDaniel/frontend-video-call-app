@@ -1,10 +1,11 @@
 import { DatePipe } from "@angular/common";
-import { Component, inject } from "@angular/core";
+import { Component, ElementRef, ViewChild, inject } from "@angular/core";
 import { MatButtonModule } from "@angular/material/button";
 import { MatIconModule } from "@angular/material/icon";
 import { MatTooltipModule } from "@angular/material/tooltip";
 import { Recording } from "@models/recording.model";
-import { RecordingService } from "@services/recording.service";
+import { PermanentRecordingService } from "@services/permanent-recording.service";
+import { TemporalRecordingService } from "@services/temporal-recording.service";
 import { Subscription } from "rxjs";
 
 @Component({
@@ -15,12 +16,16 @@ import { Subscription } from "rxjs";
 })
 export class TemporalRecordings{
 
-  private recordingService = inject(RecordingService)
+  private recordingService = inject(TemporalRecordingService)
+  private permanentRecordingService = inject(PermanentRecordingService)
   public recordings: Recording[]
   private recordingSubscription : Subscription
 
+  @ViewChild("inputName")
+  private inputRef: ElementRef<HTMLInputElement>
+
   ngOnInit() {
-    this.recordingSubscription = this.recordingService.getRecordObs().subscribe(_recordings => {
+    this.recordingSubscription = this.recordingService.getRecordSubject().subscribe(_recordings => {
       this.recordings = _recordings
     })
     this.recordingService.getRecordings()
@@ -32,5 +37,15 @@ export class TemporalRecordings{
 
   deleteRecording = async(url: URL) =>{
     this.recordingService.deleteRecording(url)
+  }
+
+  saveRecording = async (url: URL) =>{
+    await this.permanentRecordingService.saveRecording(url)
+    // await this.recordingService.deleteFromCache(url)
+  }
+
+  editName = async(url: URL) => {
+    const name = this.inputRef.nativeElement.value
+    this.recordingService.editRecordingName(url, name)
   }
 }
