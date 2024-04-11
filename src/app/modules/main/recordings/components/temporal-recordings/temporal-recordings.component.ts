@@ -41,7 +41,7 @@ export class TemporalRecordings{
 
   saveRecording = async (url: URL) =>{
     await this.permanentRecordingService.saveRecording(url)
-    // await this.recordingService.deleteFromCache(url)
+    await this.recordingService.deleteFromCache(url)
   }
 
   editName = async(url: URL) => {
