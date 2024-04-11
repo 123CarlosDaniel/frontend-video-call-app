@@ -1,13 +1,14 @@
 import { Injectable, inject } from '@angular/core'
 import { MatSnackBar } from '@angular/material/snack-bar'
-import { Recording } from '@models/recording.model'
+import { TemporalRecording } from '@models/recording.model'
 import { BehaviorSubject } from 'rxjs'
+import { v4 as uuid } from "uuid";
 
 @Injectable({
   providedIn: 'root',
 })
 export class TemporalRecordingService {
-  private recordsSubject = new BehaviorSubject<Recording[]>([])
+  private recordsSubject = new BehaviorSubject<TemporalRecording[]>([])
   private snackBar = inject(MatSnackBar)
 
   public getRecordings = async () => {
@@ -21,7 +22,7 @@ export class TemporalRecordingService {
         const r = await cache.match(k)
         const audio = await r!.blob()
         return {
-          date: data.date,
+          creationDate: data.creationDate,
           id: data.id,
           name: data.name,
           url: URL.createObjectURL(audio),
@@ -30,6 +31,19 @@ export class TemporalRecordingService {
       })
     )
     this.recordsSubject.next(records)
+  }
+
+  public saveRecording = async(audioBlob: Blob) => {
+    const cache = await caches.open('audios')
+    const response = new Response(audioBlob)
+    const randomId = uuid()
+    await cache.put(randomId, response)
+    const data = {
+      creationDate : new Date().getTime(),
+      id: randomId,
+      name: ""
+    }
+    localStorage.setItem(randomId, JSON.stringify(data))
   }
 
   public deleteFromCache = async (url: URL) => {
