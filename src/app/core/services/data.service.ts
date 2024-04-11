@@ -16,6 +16,7 @@ export class DataService {
     lastConnection: '',
     contacts: [],
     rooms: [],
+    recordings: []
   })
 
   private http = inject(HttpClient)
