@@ -4,7 +4,8 @@ export interface User {
   lastConnection?: string 
   contacts: Contact[] | []
   rooms?: Room[] | [],
-  connected?: boolean
+  connected?: boolean,
+  recordings: RecordingData[]
 }
 
 export interface Room {
