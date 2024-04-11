@@ -1,11 +1,11 @@
-import { Injectable } from "@angular/core";
-import { v4 as uuid } from "uuid";
+import { Injectable, inject } from "@angular/core";
+import { TemporalRecordingService } from "./temporal-recording.service";
 
 @Injectable({
   providedIn: 'root'
 })
 export class RecordStream{
-
+  private temporalRecordingService = inject(TemporalRecordingService)
   private mediaRecorder: MediaRecorder
 
   public record(stream1: MediaStream, stream2: MediaStream | undefined){
@@ -27,16 +27,7 @@ export class RecordStream{
     }
     this.mediaRecorder.onstop = async () => {
       const audioBlob = new Blob(audioChunks, {type: 'audio/wav'})
-      const cache = await caches.open('audios')
-      const response = new Response(audioBlob)
-      const randomId = uuid()
-      await cache.put(randomId, response)
-      const data = {
-        date : new Date().getTime(),
-        id: randomId,
-        name: ""
-      }
-      localStorage.setItem(randomId, JSON.stringify(data))
+      await this.temporalRecordingService.saveRecording(audioBlob)
     }
     this.mediaRecorder.start()
   }
