@@ -37,6 +37,7 @@ export class TemporalRecordingService {
     const id = url.pathname.split('/').pop()!
     localStorage.removeItem(id)
     await cache.delete(url)
+    this.getRecordings()
   }
 
   public deleteRecording = async (url: URL) => {
@@ -46,7 +47,6 @@ export class TemporalRecordingService {
     this.snackBar.open('Deleted successfully', 'Close', {
       duration: 3000,
     })
-    this.getRecordings()
   }
 
   public getRecordSubject = () => {
