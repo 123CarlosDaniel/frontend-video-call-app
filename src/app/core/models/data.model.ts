@@ -13,5 +13,12 @@ export interface Room {
   description: string
 }
 
+export interface RecordingData {
+  id: string
+  name: string
+  creationDate: string
+  recordingKey: string
+}
+
 export interface Contact extends Omit<User, 'contacts'>{
 }
