@@ -58,7 +58,8 @@ export class MainComponent {
     username: '',
     lastConnection: '',
     contacts: [],
-    rooms: []
+    rooms: [],
+    recordings: []
   }
   private dataSubscription: Subscription
 
