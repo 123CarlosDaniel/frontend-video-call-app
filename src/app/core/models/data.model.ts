@@ -21,5 +21,9 @@ export interface RecordingData {
   recordingKey: string
 }
 
+export interface RecordingDataExtra extends RecordingData{
+  objectUrl?: string
+}
+
 export interface Contact extends Omit<User, 'contacts'>{
 }
