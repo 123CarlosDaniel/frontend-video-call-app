@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http'
 import { Injectable, inject } from '@angular/core'
-import { User } from '@models/data.model'
+import { RecordingData, User } from '@models/data.model'
 import { BehaviorSubject, map } from 'rxjs'
 import { environment } from '../../../environments/environment'
 import { TokenService } from './token.service'
@@ -79,7 +79,11 @@ export class DataService {
         this.snackBar.open('Ocurrió un error', 'Close', {duration: 3000})
       }
     })
+  }
 
+  addRecording(recording: RecordingData){
+    const id = this.tokenService.getUserId()
+    return this.http.post(`${environment.usersUrl}/${id}/add-recording`, recording)
   }
 
   getUser(){
