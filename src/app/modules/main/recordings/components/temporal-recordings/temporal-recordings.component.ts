@@ -3,7 +3,7 @@ import { Component, ElementRef, ViewChild, inject } from "@angular/core";
 import { MatButtonModule } from "@angular/material/button";
 import { MatIconModule } from "@angular/material/icon";
 import { MatTooltipModule } from "@angular/material/tooltip";
-import { Recording } from "@models/recording.model";
+import { TemporalRecording } from "@models/recording.model";
 import { PermanentRecordingService } from "@services/permanent-recording.service";
 import { TemporalRecordingService } from "@services/temporal-recording.service";
 import { Subscription } from "rxjs";
@@ -14,11 +14,11 @@ import { Subscription } from "rxjs";
   templateUrl: './temporal-recordings.component.html',
   imports: [MatButtonModule, MatIconModule, MatTooltipModule, DatePipe],
 })
-export class TemporalRecordings{
+export class TemporalRecordingsComponent{
 
   private recordingService = inject(TemporalRecordingService)
   private permanentRecordingService = inject(PermanentRecordingService)
-  public recordings: Recording[]
+  public recordings: TemporalRecording[]
   private recordingSubscription : Subscription
 
   @ViewChild("inputName")
