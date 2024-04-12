@@ -3,7 +3,7 @@ import { MatButtonModule } from "@angular/material/button";
 import { MatIconModule } from "@angular/material/icon";
 import { MatTooltip } from "@angular/material/tooltip";
 import { RouterModule } from "@angular/router";
-import { Contact, Room } from "@models/data.model";
+import { Contact } from "@models/data.model";
 import { DataService } from "@services/data.service";
 import { Subscription } from "rxjs";
 
@@ -40,7 +40,6 @@ export class RoomsComponent{
   }
 
   deleteRoom(id: string){
-    console.log({id})
     this.dataService.deleteRoom(id)
   }
 }

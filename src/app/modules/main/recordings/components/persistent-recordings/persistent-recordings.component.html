@@ -19,5 +19,8 @@
       <audio src="{{ record.objectUrl }}" controls></audio>
     </div>
     }
+    @if (recordingsData.length == 0) {
+      <span>No hay grabaciones</span>
+    }
   </div>
 </div>

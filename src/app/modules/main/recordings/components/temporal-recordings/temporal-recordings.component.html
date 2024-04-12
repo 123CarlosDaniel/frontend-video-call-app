@@ -44,5 +44,8 @@
       <audio src="{{ record.url }}" controls></audio>
     </div>
     }
+    @if (recordings.length == 0) {
+      <span>No hay grabaciones</span>
+    }
   </div>
 </div>

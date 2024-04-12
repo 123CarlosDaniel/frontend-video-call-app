@@ -14,7 +14,7 @@ import { Subscription } from "rxjs";
 export class PersistentRecordingsComponent{
   private dataService = inject(DataService)
   private s3AudioService = inject(S3AudioService)
-  recordingsData: RecordingDataExtra[]
+  recordingsData: RecordingDataExtra[] = []
   userSubscription: Subscription
 
   ngOnInit(){
