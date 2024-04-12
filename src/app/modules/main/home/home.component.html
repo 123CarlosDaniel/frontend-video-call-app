@@ -1,1 +1,76 @@
-<h1>Here is going to be some information</h1>
+<header class="py-2">
+  <div class="container px-4 mx-auto">
+    <h1 class="text-3xl font-semibold">
+      ¡ Hola
+      <span class="font-medium text-orange-500">{{ user.username }}</span>
+      bienvenido !
+    </h1>
+    <h2 class="text-2xl text-green-700">Aplicación de Videollamadas</h2>
+    <p class="mt-1">
+      ¡Conéctate con tus amigos y familiares en cualquier momento y en cualquier
+      lugar!
+    </p>
+  </div>
+</header>
+
+<main class="container px-4 py-4 mx-auto">
+  <section class="mb-8">
+    <h2 class="mb-4 text-2xl font-semibold">Funcionalidades</h2>
+    <ul class="list-disc list-inside">
+      <li>Realizar videollamadas con tus contactos.</li>
+      <li>Grabar llamadas para revivir momentos especiales.</li>
+      <li>Escuchar audios grabados en cualquier momento.</li>
+      <li>
+        Añadir y gestionar contactos para mantenerse en contacto fácilmente.
+      </li>
+      <li>Unirse a salas públicas de tus contactos para socializar.</li>
+      <li>Crear tus propias salas para videollamadas grupales.</li>
+      <li>
+        Ver el estado de conexión de tus contactos para saber quién está
+        disponible.
+      </li>
+      <li>
+        Guardar audios temporales en la caché del navegador o permanentemente en
+        la base de datos.
+      </li>
+    </ul>
+  </section>
+
+  <section>
+    <h2 class="text-2xl font-semibold !mb-0">Tecnologías Utilizadas</h2>
+    <div class="grid grid-cols-2 gap-4">
+      <div class="p-6 bg-white rounded shadow">
+        <h3 class="mb-2 text-xl !font-medium text-indigo-800">Frontend</h3>
+        <ul class="list-disc list-inside">
+          <li>Angular 17</li>
+          <li>Angular Material</li>
+          <li>Tailwind CSS</li>
+          <li>WebRTC</li>
+          <li>
+            APIs del navegador: Cache Storage, Local Storage, MediaRecorder,
+            MediaDevices
+          </li>
+          <li>Manejo de streams de video y audio</li>
+        </ul>
+      </div>
+      <div class="p-6 bg-white rounded shadow">
+        <h3 class="mb-2 text-xl text-indigo-800 !font-medium">Backend</h3>
+        <ul class="list-disc list-inside">
+          <li>Spring Boot</li>
+          <li>Spring Data</li>
+          <li>Spring Security</li>
+          <li>AWS S3</li>
+          <li>JWT</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="py-4 text-white bg-gray-900">
+  <div class="flex justify-center text-center ">
+    <span>
+       © 2024 Aplicación de Videollamadas. 
+    </span>
+  </div>
+</footer>
