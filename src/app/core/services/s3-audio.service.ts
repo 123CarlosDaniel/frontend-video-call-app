@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { PutObjectCommand, S3Client } from "@aws-sdk/client-s3";
+import { GetObjectCommand, PutObjectCommand, S3Client } from "@aws-sdk/client-s3";
 import { environment } from "@environments/environment";
 
 @Injectable({
@@ -26,5 +26,18 @@ export class S3AudioService{
       Body: blob
     })
     await this.client.send(putCommand)
+  }
+
+  getImageUrl = async (key: string) => {
+    const getCommand = new GetObjectCommand({
+      Key: key, 
+      Bucket: environment.BUCKET_NAME
+    })
+
+    const response = await this.client.send(getCommand)
+    const buffer = await response.Body!.transformToByteArray()
+    const blob = new Blob([buffer], { type: 'audio/wav' })
+    const audioUrl = URL.createObjectURL(blob)
+    return audioUrl
   }
 }
