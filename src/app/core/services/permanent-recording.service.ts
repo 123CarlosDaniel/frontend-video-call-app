@@ -17,19 +17,16 @@ export class PermanentRecordingService{
     const blob = await r?.blob()!
     const prefix = this.tokenService.getUserId()
     const recordId = url.pathname.split('/').pop()!
-
     const key = `${prefix}/${recordId}`
-
     const data = JSON.parse(localStorage.getItem(recordId)!)
 
-    await Promise.all([
-      this.s3AudioService.saveImage(blob, key),
-      this.dataService.addRecording({
-        id: recordId,
-        name: data.name,
-        creationDate: data.date,
-        recordingKey: key
-      })
-    ])
+    await this.s3AudioService.saveImage(blob, key)
+
+    this.dataService.addRecording({
+      id: recordId,
+      name: data.name,
+      creationDate: data.creationDate,
+      recordingKey: key
+    })
   }
 }
