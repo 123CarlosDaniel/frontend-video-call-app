@@ -20,7 +20,7 @@ export class PermanentRecordingService{
     const key = `${prefix}/${recordId}`
     const data = JSON.parse(localStorage.getItem(recordId)!)
 
-    await this.s3AudioService.saveImage(blob, key)
+    await this.s3AudioService.saveRecording(blob, key)
 
     this.dataService.addRecording({
       id: recordId,
@@ -28,5 +28,14 @@ export class PermanentRecordingService{
       creationDate: data.creationDate,
       recordingKey: key
     })
+  }
+
+  getRecordingUrl = (key: string) => {
+    return this.s3AudioService.getRecordingUrl(key)
+  }
+
+  deleteRecording = async (audioId: string, key: string) => {
+    await this.s3AudioService.deleteRecording(key)
+    this.dataService.removeRecording(audioId)
   }
 }

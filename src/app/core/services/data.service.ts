@@ -95,6 +95,19 @@ export class DataService {
     })
   }
 
+  removeRecording(recordingId: string) {
+    this.http.delete(`${environment.usersUrl}/delete-recording/${recordingId}`)
+    .subscribe({
+      next: (res) => {
+        this.snackBar.open("Grabacion eliminada", "Close", {duration: 3000})
+        this.fetchData()
+      },
+      error: () => {
+        this.snackBar.open("Ocurrio un error", "Close", {duration:3000})
+      }
+    })
+  }
+
   getUser(){
     return this.user
   }  

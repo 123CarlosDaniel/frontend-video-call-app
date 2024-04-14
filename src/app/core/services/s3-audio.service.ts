@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { GetObjectCommand, PutObjectCommand, S3Client } from "@aws-sdk/client-s3";
+import { DeleteObjectCommand, GetObjectCommand, PutObjectCommand, S3Client } from "@aws-sdk/client-s3";
 import { environment } from "@environments/environment";
 
 @Injectable({
@@ -18,7 +18,7 @@ export class S3AudioService{
     })
   }
 
-  saveImage = async (blob: Blob, key: string) => {
+  saveRecording = async (blob: Blob, key: string) => {
     const putCommand = new PutObjectCommand({
       Bucket: environment.BUCKET_NAME,
       Key: key,
@@ -28,7 +28,7 @@ export class S3AudioService{
     await this.client.send(putCommand)
   }
 
-  getImageUrl = async (key: string) => {
+  getRecordingUrl = async (key: string) => {
     const getCommand = new GetObjectCommand({
       Key: key, 
       Bucket: environment.BUCKET_NAME
@@ -39,5 +39,13 @@ export class S3AudioService{
     const blob = new Blob([buffer], { type: 'audio/wav' })
     const audioUrl = URL.createObjectURL(blob)
     return audioUrl
+  }
+
+  deleteRecording = async (key: string) => {
+    const deleteCommand = new DeleteObjectCommand({
+      Key: key,
+      Bucket: environment.BUCKET_NAME
+    })
+    await this.client.send(deleteCommand)
   }
 }
