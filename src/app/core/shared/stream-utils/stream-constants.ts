@@ -7,15 +7,14 @@ export const iceServers = {
 }
 
 export const mediaConstraints: MediaStreamConstraints = {
-  // video:{
-  //     width:{min:640, ideal:1920, max:1920},
-  //     height:{min:480, ideal:1080, max:1080},
-  // },
+  video:{
+      width:{min:640, ideal:1920, max:1920},
+      height:{min:480, ideal:1080, max:1080},
+  },
   audio: {
     echoCancellation: false,
     noiseSuppression: false,
     autoGainControl: true,
     sampleRate: 44100,
   },
-  video: false,
 }
